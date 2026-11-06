@@ -1,0 +1,1031 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>10 / LED Studio</title>
+<style>
+:root{color-scheme:dark;--bg:#101512;--panel:#171e19;--line:#303d32;--text:#edf4e9;--muted:#a0afa0;--accent:#c1f286}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px system-ui,Segoe UI,sans-serif}button,input,select{font:inherit}button,select,input[type=text],input[type=number]{border:1px solid var(--line);background:#222d24;color:var(--text);border-radius:7px;padding:9px 12px}button{cursor:pointer}button:hover{border-color:var(--accent)}button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:3px}button:disabled{opacity:.35;cursor:default}.primary{background:var(--accent);color:#17250d;border-color:var(--accent);font-weight:650}.quiet{background:transparent}.muted{color:var(--muted)}header{height:88px;border-bottom:1px solid var(--line);padding:0 32px;display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{display:flex;align-items:center;gap:15px}.mark{font-size:28px;font-weight:750;letter-spacing:-2px;border-right:1px solid var(--line);padding-right:18px;color:var(--accent)}h1{font-size:18px;margin:0 0 4px;font-weight:600}.eyebrow{font-size:11px;letter-spacing:1.8px;text-transform:uppercase;color:var(--muted)}.app{display:grid;grid-template-columns:285px minmax(0,1fr);min-height:calc(100vh - 88px)}aside{border-right:1px solid var(--line);padding:25px 17px}.aside-heading{padding:0 10px 16px;display:flex;justify-content:space-between}#search{width:100%;margin-bottom:14px}#library{max-height:calc(100vh - 300px);overflow:auto}.preset{border:0;background:none;width:100%;text-align:left;display:flex;gap:12px;align-items:center;padding:11px 12px;margin:2px 0;color:var(--muted)}.preset.active{background:#2a3926;color:var(--accent)}.preset .idx{font:11px ui-monospace,monospace;opacity:.7;width:20px}.preset .label{flex:1}.badge{font-size:10px;border:1px solid var(--line);border-radius:4px;padding:3px 5px}main{padding:30px 34px;min-width:0;max-width:1600px;width:100%;margin:auto}.heading{display:flex;justify-content:space-between;gap:15px;align-items:center}h2{font-size:27px;letter-spacing:-.8px;margin:8px 0}.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.canvas{margin-top:24px;background:radial-gradient(ellipse at 50% 50%,#233124 0%,#151d18 70%);border:1px solid var(--line);border-radius:13px;overflow:hidden}.canvas-top{padding:18px 21px;display:flex;justify-content:space-between;gap:14px}.live{font-size:11px;letter-spacing:1px;color:var(--accent)}#board{display:grid;grid-template-columns:repeat(5,1fr);gap:24px 10px;padding:35px 20px 43px;min-height:240px;align-items:center}.led{border:0;background:transparent;padding:0;display:flex;align-items:center;flex-direction:column;gap:8px;min-width:0;color:var(--muted)}.bulb{display:block;width:29px;height:29px;border-radius:50%;border:2px solid #49603f;background:#253022;transition:background .025s}.led.on .bulb{background:var(--led-color,#c1f286);border-color:#e7ffd2;box-shadow:0 0 16px var(--led-color,#c1f286),0 0 35px #b9f27525}.led small{font:10px ui-monospace,monospace;color:#788c79}.led span.num{font-size:11px}.canvas-bottom{border-top:1px solid var(--line);padding:14px 21px;display:flex;justify-content:space-between;color:var(--muted);font-size:12px;gap:15px}.transport{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:20px 0;flex-wrap:wrap}.speed{display:flex;align-items:center;gap:12px;font-size:12px}input[type=range]{accent-color:var(--accent);width:150px}.panel{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:20px;margin-top:5px}.panel-title{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:16px}h3{font-size:14px;font-weight:600;margin:0}.timeline{display:flex;gap:6px;overflow:auto;padding:2px 2px 12px;max-height:112px}.frame{min-width:54px;padding:8px 6px;background:#202a22;font-size:11px;flex-shrink:0}.frame.selected{border-color:var(--accent);color:var(--accent)}.frame i{display:block;height:19px;letter-spacing:-1px;font-style:normal;font-size:9px;overflow:hidden;margin-bottom:6px;color:var(--accent)}.editbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding-top:12px;border-top:1px solid var(--line)}.editbar input[type=number]{width:100px}.note{font-size:12px;line-height:1.6;color:var(--muted)}footer{display:flex;justify-content:space-between;gap:15px;margin-top:22px;font-size:11px;color:var(--muted)}#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--accent);color:#17250d;padding:12px 22px;border-radius:8px;z-index:10;display:none}#rename{width:220px}#board.single{grid-template-columns:repeat(10,minmax(38px,1fr));overflow-x:auto;gap:10px;min-height:240px}#board.ring{display:block;position:relative;height:380px;width:min(100%,650px);margin:auto}#board.ring .led{gap:3px;position:absolute;transform:translate(-50%,-50%)}#board.ring .led small{display:none}.saved{font-size:11px;color:var(--muted)}@media(min-width:1500px){#board{padding:65px 35px;gap:45px 15px}.bulb{width:38px;height:38px}}@media(max-width:850px){header{padding:15px 20px;height:auto}.app{grid-template-columns:1fr}aside{border-right:0;border-bottom:1px solid var(--line);padding:18px}#library{max-height:155px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}main{padding:24px 18px}#board{grid-template-columns:repeat(6,1fr);padding:25px 10px;gap:18px 6px}.heading{align-items:flex-start;flex-direction:column}.header-meta{display:none}footer{flex-direction:column}.speed{flex-wrap:wrap}.bulb{width:25px;height:25px}}
+</style></head><body>
+<header><div class="brand"><div class="mark">10 /</div><div><h1>LED Studio</h1><div class="eyebrow">Design light in motion</div></div></div><div class="header-meta muted">STM8S003F3P <span style="margin:0 12px;color:#405143">/</span> 10 independent outputs</div><div class="toolbar"><button id="load" class="quiet">Import JSON</button><button id="save">Export JSON ↓</button></div></header>
+<div class="app"><aside><div class="aside-heading"><span class="eyebrow">Pattern library</span><span class="badge">35 FIRMWARE PATTERNS</span></div><input id="search" type="text" aria-label="Search patterns" placeholder="Search patterns…"><div id="library"></div><button id="new" class="primary" style="width:100%;margin-top:18px">+ New animation</button><p class="note" style="padding:0 9px">35 patterns from your current firmware.<br>Copy any pattern to make it your own.</p></aside>
+<main><div class="heading"><div><div id="kind" class="eyebrow">Firmware collection / 01</div><h2 id="title">Forward Fill</h2><span id="subtitle" class="muted">Original sequence · 10 channels</span></div><div class="toolbar"><button id="copy">Copy to edit</button><button id="exportC" class="quiet">Export C ↓</button></div></div>
+<div class="canvas"><div class="canvas-top"><span class="live" id="state">● PAUSED</span><div class="toolbar"><label class="muted" for="layout">View</label><select id="layout"><option value="line">Two rows</option><option value="single">Single row</option><option value="ring">Circle</option></select><input id="color" type="color" value="#c1f286" aria-label="LED preview color" style="width:30px;height:30px;border:0;background:none"></div></div><div id="board" aria-label="LED preview and frame editor"></div><div class="canvas-bottom"><span id="counter">Frame 1</span><span id="lit">0 / 10 illuminated</span><span id="duration">Sequence duration</span></div></div>
+<div class="transport"><div class="toolbar"><button id="prev" aria-label="Previous frame">←</button><button id="play" class="primary" style="min-width:108px">▶ Play</button><button id="next" aria-label="Next frame">→</button><button id="restart" class="quiet">Restart</button><label class="muted"><input type="checkbox" id="loop" checked> Loop</label><label class="muted"><input type="checkbox" id="playlist"> Full preview playlist</label></div><div class="speed"><label for="speed">POT speed</label><span class="muted">Fast</span><input id="speed" type="range" min="10" max="1000" value="180"><span class="muted">Slow</span><output id="speedVal">180</output></div></div>
+<div class="panel"><div class="panel-title"><h3>Frame timeline <span id="frameTotal" class="muted"></span></h3><span class="saved" id="saved">Local preview</span></div><div id="timeline" class="timeline"></div><div class="editbar"><input id="rename" type="text" aria-label="Animation name" maxlength="80"><label for="hold">Hold</label><input id="hold" type="number" min="1" max="60000" value="180"><span class="muted">units</span><button id="add">+ Frame</button><button id="duplicate">Duplicate</button><button id="delete">Delete</button><button id="all">All on</button><button id="none">Clear</button><button id="invert">Invert</button><button id="shift">Shift →</button></div><p class="note" id="editHint">Copy this firmware pattern to edit frames. Click any frame to inspect it.</p></div>
+<footer><span>Preview timing is illustrative: 1 delay unit ≈ 1 ms. Board delays are uncalibrated.</span><span>Works offline · JSON files preserve your designs</span></footer></main></div><div id="toast" role="status"></div><input type="file" id="file" accept=".json,application/json" hidden>
+<script>
+const PRESETS=[{"id":"mode_forward_three_strobe_fill","repeats":1,"name":"Forward Three Strobe Fill"},{"id":"mode_all_leds_strobe","repeats":10,"name":"All LEDs Strobe"},{"id":"mode_inward_mirror_strobe_chase","repeats":3,"name":"Inward Mirror Strobe Chase"},{"id":"mode_inward_outward_mirror_strobe_chase","repeats":3,"name":"Inward Outward Mirror Strobe Chase"},{"id":"mode_bouncing_dark_window","repeats":3,"name":"Bouncing Dark Window"},{"id":"mode_ping_pong_two_led_strobe_chase","repeats":3,"name":"Ping-pong Two LED Strobe Chase"},{"id":"mode_forward_single_led_chase","repeats":3,"name":"Forward Single LED Chase"},{"id":"mode_outward_mirror_strobe_chase","repeats":3,"name":"Outward Mirror Strobe Chase"},{"id":"mode_dark_pair_mirror_chase","repeats":3,"name":"Dark Pair Mirror Chase"},{"id":"mode_reverse_strobe_chain_fill","repeats":1,"name":"Reverse Strobe Chain Fill"},{"id":"mode_triple_strobe_burst_pause","repeats":3,"name":"Triple Strobe Burst / Pause"},{"id":"mode_ping_pong_triple_strobe_chase","repeats":1,"name":"Ping-pong Triple Strobe Chase"},{"id":"mode_comet_ping_pong","repeats":3,"name":"Comet Ping-pong"},{"id":"mode_center_out_strobe_fill","repeats":3,"name":"Center-out Strobe Fill"},{"id":"mode_inward_outward_mirror_two_led_strobe_chase","repeats":3,"name":"Inward Outward Mirror Two-LED Strobe Chase"},{"id":"mode_outward_mirror_fill_inward_empty","repeats":3,"name":"Outward Mirror Fill / Inward Empty"},{"id":"mode_inward_mirror_strobe_fill","repeats":3,"name":"Inward Mirror Strobe Fill"},{"id":"mode_odd_eight_blinks_then_even_eight_blinks","repeats":3,"name":"Odd ×8 / Even ×8 Blink"},{"id":"mode_forward_strobe_chain_fill","repeats":1,"name":"Forward Strobe Chain Fill"},{"id":"mode_ping_pong_dark_chase","repeats":3,"name":"Ping-pong Dark Chase"},{"id":"mode_reverse_single_led_chase","repeats":3,"name":"Reverse Single LED Chase"},{"id":"mode_forward_two_led_chase","repeats":3,"name":"Forward Two LED Chase"},{"id":"mode_forward_fill_forward_empty","repeats":3,"name":"Forward Fill / Forward Empty"},{"id":"mode_two_ended_chase_and_stack","repeats":3,"name":"Two-ended Chase-and-Stack"},{"id":"mode_ping_pong_three_led_strobe_chase","repeats":3,"name":"Ping-pong Three LED Strobe Chase"},{"id":"mode_forward_reverse_ripple_fill","repeats":3,"name":"Forward / Reverse Ripple Fill"},{"id":"mode_expanding_contracting_band","repeats":3,"name":"Expanding / Contracting Band"},{"id":"mode_forward_fill_reverse_empty","repeats":3,"name":"Forward Fill / Reverse Empty"},{"id":"mode_twin_chase_cross_through","repeats":3,"name":"Twin Chase / Cross-through"},{"id":"mode_half_row_ten_strobe_alternate","repeats":3,"name":"Half-row Ten-strobe Alternate"},{"id":"mode_half_row_five_strobe_alternate","repeats":3,"name":"Half-row Five-strobe Alternate"},{"id":"mode_even_ten_blinks_then_odd_ten_blinks","repeats":3,"name":"Even ×10 / Odd ×10 Blink"},{"id":"mode_ping_pong_split_pair_strobe_chase","repeats":3,"name":"Ping-pong Split Pair Strobe Chase"},{"id":"mode_ping_pong_double_strobe_chase","repeats":3,"name":"Ping-pong Double Strobe Chase"},{"id":"mode_split_odd_even_double_strobe_fill","repeats":3,"name":"Split Odd/Even Double-strobe Fill"}];
+function capturePattern(id, speed) {
+ let channel=10,mode=0,mapped_value=speed,mask=0; const frames=[];
+ function ledon(i){if(i<0||i>=10)throw Error('Invalid LED');mask|=1<<i;}
+ function ledoff(i){if(i<0||i>=10)throw Error('Invalid LED');mask&=~(1<<i);}
+ function alloff(){mask=0;} function allon(){mask=1023;}
+ function led_bit(i){return i>=0&&i<10?1<<i:0;}
+ function pattern_mask(nextMask){mask=nextMask;}
+ function myDelay(units){frames.push({mask:mask>>>0,units});}
+ function mode_forward_fill_forward_empty()
+{
+	let i;
+	for(i=0;i<channel;i++)
+	{
+    ledon(i);  // Turn ON LED
+		myDelay(mapped_value);
+        if (mode != 0) return;
+	}
+	
+	for(i=0;i<channel;i++)
+	{
+    ledoff(i) ; // Turn ON LED
+		myDelay(mapped_value);
+        if (mode != 0) return;
+	}
+	
+		alloff();
+}
+/* Forward Single LED Chase. */
+function mode_forward_single_led_chase()
+{
+	let i;
+	for(i=0;i<channel;i++)
+	{
+							
+            ledon(i);  // Turn ON LED
+						
+						myDelay(mapped_value);
+        if (mode != 0) return;
+						ledoff(i);
+			
+	}
+	alloff();	
+}
+
+/* Ping-pong Dark Chase. */
+function mode_ping_pong_dark_chase()
+{
+	let i;
+
+    // Turn all LEDs ON first
+    for(i = 0; i < channel; i++)
+    {
+        ledon(i);
+    }
+
+    for(i = 0; i < channel; i++)
+    {
+        ledoff(i);              // Moving OFF LED
+
+        myDelay(mapped_value);
+        if (mode != 0) return;
+
+        ledon(i);               // Restore LED
+    }
+		
+		for(i = channel-2; i >= 0; i--)
+    {
+        ledoff(i);              // Moving OFF LED
+
+        myDelay(mapped_value);
+        if (mode != 0) return;
+
+        ledon(i);               // Restore LED
+    }
+		
+
+    alloff();
+}
+
+
+
+/* Reverse Single LED Chase. */
+function mode_reverse_single_led_chase()
+{
+	let i;
+	for(i=0;i<channel;i++)
+	{
+            ledon(channel-1-i);  // Turn ON LED
+						myDelay(mapped_value);
+        if (mode != 0) return;
+						ledoff(channel-1-i);
+  }
+
+}
+
+
+
+
+/* Forward Two LED Chase. */
+function mode_forward_two_led_chase()
+{
+	let i,j;
+	 for(i=0;i<channel;i++)
+	 {
+		 if(i!=0 && i!= 1)
+		 {
+			  ledoff(i-2);
+		 }
+		 ledon(i);
+	 myDelay(mapped_value);
+        if (mode != 0) return;
+	 }
+	  ledoff(channel-2); //4
+	 myDelay(mapped_value);
+        if (mode != 0) return;
+	  ledoff(channel-1);//3
+	 myDelay(mapped_value);
+        if (mode != 0) return;
+	 
+	
+	 alloff();
+	 
+}
+
+/* Forward Strobe Chain Fill. */
+function mode_forward_strobe_chain_fill()
+{
+let i=0,j,k;
+for(i=0;i<channel;i++)
+{
+	if(i!=0)
+	{
+		ledoff(i-1);
+	}
+	for(k=0;k<2;k++)
+	{
+	ledon(i);
+	
+	 myDelay(100);
+        if (mode != 0) return;
+	 ledoff(i);
+	
+	 myDelay(mapped_value);
+        if (mode != 0) return;
+ }
+	ledon(i);
+}
+for(j=0;j<channel-1;j++)
+{
+for(i=0;i<channel-j;i++)
+{
+	
+		for(k=0;k<2;k++)
+		{
+	ledon(i);
+	 myDelay(100);
+        if (mode != 0) return;
+	 
+	 if(i==(channel-2-j))
+	 {
+		 break;
+	 }
+	ledoff(i);
+myDelay(mapped_value);
+        if (mode != 0) return;
+}
+ if(i==(channel-2-j))
+	 {
+		 break;
+	 }
+}
+}
+alloff();
+}
+
+/* Ping-pong Double Strobe Chase. */
+function mode_ping_pong_double_strobe_chase()
+{
+let i,j,k;
+for(i=0;i<channel;i++)
+{
+	
+	for(k=0;k<2;k++)
+	{	
+	ledon(i);
+	myDelay(100);
+        if (mode != 0) return;
+	
+	ledoff(i);
+ 	myDelay(mapped_value);
+        if (mode != 0) return;
+	}
+
+}
+for(i=channel-1;i>0;i--)
+{
+	
+		
+	for(k=0;k<2;k++)
+	{	
+	ledon(i);
+	myDelay(100);
+        if (mode != 0) return;
+	
+	 
+
+	ledoff(i);
+myDelay(mapped_value);
+        if (mode != 0) return;
+}
+
+}
+
+alloff();
+
+}
+
+
+/* Forward Fill / Reverse Empty. */
+function mode_forward_fill_reverse_empty()
+{
+	let i=0,j=0;
+
+	for(i=0;i<channel;i++)
+	{
+		ledon(i);
+	
+	 myDelay(mapped_value);
+        if (mode != 0) return;
+
+}
+		for(i=channel-1;i>=0;i--)
+	{
+		ledoff(i);
+	
+	 myDelay(mapped_value);
+        if (mode != 0) return;
+
+}
+
+alloff();
+}
+
+/* Inward Mirror Strobe Fill. */
+function mode_inward_mirror_strobe_fill()
+{
+		
+		let j=0,i=0;
+
+	for(i=0;i<channel/2;i++)
+	{
+		
+		ledon(i);
+    ledon(channel-1-i);
+    myDelay(40);
+        if (mode != 0) return;
+
+    ledoff(i);
+    ledoff(channel-1-i);
+		myDelay(mapped_value);
+        if (mode != 0) return;
+		
+		ledon(i);
+		ledon(channel-1-i);
+		
+	}
+	for(i=channel-1;i>=channel/2;i--)
+	{
+	
+		ledoff(i);
+		ledoff(channel-1-i);
+		myDelay(mapped_value);
+        if (mode != 0) return;
+	}
+
+
+alloff();
+}
+
+/* Outward Mirror Fill / Inward Empty. */
+function mode_outward_mirror_fill_inward_empty()
+{
+    let i, j;
+
+
+        // Fill from center outward
+        for(i = channel/2 - 1; i >= 0; i--)
+        {
+            ledon(i);
+            ledon(channel - 1 - i);
+
+            myDelay(mapped_value);
+        if (mode != 0) return;
+        }
+
+        // Unfill from ends inward
+        for(i = 0; i < channel/2; i++)
+        {
+            ledoff(i);
+            ledoff(channel - 1 - i);
+
+            myDelay(mapped_value);
+        if (mode != 0) return;
+        }
+    
+
+    alloff();
+}
+/* All LEDs Strobe: short fixed ON pulse; POT controls OFF interval. */
+function mode_all_leds_strobe()
+{
+    let i;
+    let j;
+   
+  
+        for (i = 0; i < channel; i++)
+        {
+            ledon(i);
+        }
+        myDelay(20);
+        if (mode != 0) return;
+        for (i = 0; i < channel; i++)
+        {
+            ledoff(i);
+        }
+        myDelay(mapped_value);
+        if (mode != 0) return;
+   
+    alloff();
+}
+
+/* Ping-pong Two LED Strobe Chase. */
+function mode_ping_pong_two_led_strobe_chase()
+{
+    let i;
+
+    // Forward
+    for(i = 0; i < channel; i++)
+    {
+        if(i > 0)
+            ledon(i - 1);
+
+        ledon(i);
+
+        myDelay(100);
+        if (mode != 0) return;          // ON time
+
+        if(i > 0)
+            ledoff(i - 1);
+
+        ledoff(i);
+
+        myDelay(mapped_value);
+        if (mode != 0) return; // OFF time
+    }
+
+    // Reverse
+    for(i = channel - 1; i >= 0; i--)
+    {
+        if(i < channel - 1)
+            ledon(i + 1);
+
+        ledon(i);
+
+        myDelay(100);
+        if (mode != 0) return;          // ON time
+
+        if(i < channel - 1)
+            ledoff(i + 1);
+
+        ledoff(i);
+
+        myDelay(mapped_value);
+        if (mode != 0) return; // OFF time
+    }
+
+    alloff();
+
+}
+/* Ping-pong Three LED Strobe Chase. */
+function mode_ping_pong_three_led_strobe_chase()
+{
+   let i;
+
+    // Forward
+    for(i = 0; i < channel; i++)
+    {
+        if(i >= 2) ledon(i - 2);
+        if(i >= 1) ledon(i - 1);
+        ledon(i);
+
+        myDelay(100);
+        if (mode != 0) return;              // ON time
+
+        if(i >= 2) ledoff(i - 2);
+        if(i >= 1) ledoff(i - 1);
+        ledoff(i);
+
+        myDelay(mapped_value);
+        if (mode != 0) return;     // OFF time
+    }
+
+    // Reverse
+    for(i = channel - 1; i >= 0; i--)
+    {
+        if(i <= channel - 3) ledon(i + 2);
+        if(i <= channel - 2) ledon(i + 1);
+        ledon(i);
+
+        myDelay(100);
+        if (mode != 0) return;              // ON time
+
+        if(i <= channel - 3) ledoff(i + 2);
+        if(i <= channel - 2) ledoff(i + 1);
+        ledoff(i);
+
+        myDelay(mapped_value);
+        if (mode != 0) return;     // OFF time
+    }
+
+    alloff();
+}
+
+/* Inward Outward Mirror Strobe Chase. */
+function mode_inward_outward_mirror_strobe_chase()
+{
+       let i;
+
+    // Inward
+    for(i = 0; i < channel/2; i++)
+    {
+        ledon(i);
+        ledon(channel-1-i);
+
+        myDelay(100);
+        if (mode != 0) return;
+
+        ledoff(i);
+        ledoff(channel-1-i);
+
+        myDelay(mapped_value);
+        if (mode != 0) return;
+    }
+
+    // Outward
+    for(i = channel/2-1; i >= 0; i--)
+    {
+        ledon(i);
+        ledon(channel-1-i);
+
+        myDelay(100);
+        if (mode != 0) return;
+
+        ledoff(i);
+        ledoff(channel-1-i);
+
+        myDelay(mapped_value);
+        if (mode != 0) return;
+    }
+
+    alloff();
+}
+
+
+/* Inward Mirror Strobe Chase. */
+function mode_inward_mirror_strobe_chase()
+{
+  let i, j;
+
+
+        for(i = 0; i < channel / 2; i++)
+        {
+            ledon(i);
+            ledon(channel - 1 - i);
+
+            myDelay(100);
+        if (mode != 0) return;              // ON time
+
+            ledoff(i);
+            ledoff(channel - 1 - i);
+
+            myDelay(mapped_value);
+        if (mode != 0) return;     // OFF time
+        }
+    
+
+    alloff();
+	}
+
+/* Outward Mirror Strobe Chase: center pair to outermost pair. */
+function mode_outward_mirror_strobe_chase()
+{
+    let i;
+    alloff();
+    for (i = channel/2 - 1; i >= 0; i--)
+    {
+        ledon(i);
+        ledon(channel - 1 - i);
+        myDelay(100);
+        if (mode != 0) return;
+        ledoff(i);
+        ledoff(channel - 1 - i);
+        myDelay(mapped_value);
+        if (mode != 0) return;
+    }
+    alloff();
+}
+
+// Paired LEDs in two halves move forward and back, flashing at each step.
+/* Ping-pong Split Pair Strobe Chase. */
+function mode_ping_pong_split_pair_strobe_chase()
+{
+   let i;
+
+    // Inward
+    for(i = 0; i < channel/2; i++)
+    {
+        ledon(i);
+        ledon(i + channel/2);
+
+        myDelay(100);
+        if (mode != 0) return;
+
+        ledoff(i);
+        ledoff(i + channel/2);
+
+        myDelay(mapped_value);
+        if (mode != 0) return;
+    }
+
+    // Outward
+    for(i = channel/2 - 1; i >= 0; i--)
+    {
+        ledon(i);
+        ledon(i + channel/2);
+
+        myDelay(100);
+        if (mode != 0) return;
+
+        ledoff(i);
+        ledoff(i + channel/2);
+
+        myDelay(mapped_value);
+        if (mode != 0) return;
+    }
+
+    alloff();
+}
+
+// One LED flashes three times at each step, moving forward and back.
+/* Ping-pong Triple Strobe Chase. */
+function mode_ping_pong_triple_strobe_chase()
+{
+ let i,k;
+
+    // Forward
+    for(i = 0; i < channel; i++)
+    {
+			for(k=0;k<3;k++)
+			{
+        ledon(i);
+
+        myDelay(100);
+        if (mode != 0) return;          // Strobe ON
+
+        ledoff(i);
+
+        myDelay(mapped_value);
+        if (mode != 0) return; // Strobe OFF
+			}
+    }
+
+    // Reverse (skip last LED)
+    for(i = channel - 2; i >= 0; i--)
+    {
+			for(k=0;k<3;k++)
+			{
+        ledon(i);
+
+        myDelay(100);
+        if (mode != 0) return;          // Strobe ON
+
+        ledoff(i);
+
+        myDelay(mapped_value);
+        if (mode != 0) return; // Strobe OFF
+			}
+    }
+
+    alloff();
+}
+
+/* Odd x8 / Even x8 Blink. */
+function mode_odd_eight_blinks_then_even_eight_blinks()
+{
+	let i,j,k;
+
+		for(k=0;k<8;k++)
+		{
+	for (i = 0; i < channel; i+=2)
+        {
+					
+            ledon(i);
+						
+					
+						
+        }
+				myDelay(100);
+        if (mode != 0) return;
+       
+			
+				alloff();
+				 myDelay(mapped_value);
+        if (mode != 0) return;
+			}
+				for(k=0;k<8;k++)
+		{
+	for (i = 1; i < channel; i+=2)
+        {
+            ledon(i);
+						
+        }
+				myDelay(100);
+        if (mode != 0) return;
+						
+       
+			
+			
+				alloff();
+				 myDelay(mapped_value );
+        if (mode != 0) return;
+			}
+					
+}
+
+function mode_forward_three_strobe_fill() //flicker individual LEDs 
+{
+     let i, s;
+
+    alloff();
+
+    for(i = 0; i < channel; i++)
+    {
+        // Previous LEDs remain ON
+        for(s = 0; s < 3; s++)   // Number of strobes
+        {
+            ledon(i);            // New LED ON
+
+            myDelay(100);
+        if (mode != 0) return;
+
+            ledoff(i);           // New LED OFF
+
+            myDelay(mapped_value);
+        if (mode != 0) return;
+        }
+
+        // Leave new LED ON permanently
+        ledon(i);
+				myDelay(mapped_value);
+        if (mode != 0) return;
+    }
+
+    
+
+    alloff();
+}
+
+
+
+/* Odd x10 / Even x1 Blink. */
+
+
+/* Even x10 / Odd x1 Blink. */
+function mode_even_ten_blinks_then_odd_ten_blinks()
+{
+    let group, flash, position;
+    alloff();
+    for (group = 0; group < 2; group++) {
+        for (flash = 0; flash < 10; flash++) {
+            for (position = 0; position < channel; position++)
+                if (position % 2 == (group == 0 ? 1 : 0)) ledon(position);
+            myDelay(100);
+            if (mode != 0) return;
+            alloff();
+            myDelay(mapped_value);
+            if (mode != 0) return;
+        }
+    }
+}
+/* Reverse Strobe Chain Fill. */
+function mode_reverse_strobe_chain_fill()
+{
+    let i = 0, j, k;
+
+    /* Forward section reversed */
+    for(i = channel - 1; i >= 0; i--)
+    {
+        if(i != (channel - 1))
+        {
+            ledoff(i + 1);
+        }
+
+        for(k = 0; k < 2; k++)
+        {
+            ledon(i);
+
+            myDelay(100);
+        if (mode != 0) return;
+            ledoff(i);
+
+            myDelay(mapped_value);
+        if (mode != 0) return;
+        }
+
+        ledon(i);
+    }
+
+    /* Tail shrinking in reverse direction */
+    for(j = 0; j < channel - 1; j++)
+    {
+        for(i = channel - 1; i >= j; i--)
+        {
+            for(k = 0; k < 2; k++)
+            {
+                ledon(i);
+
+                myDelay(100);
+        if (mode != 0) return;
+
+                if(i == (j + 1))
+                {
+                    break;
+                }
+
+                ledoff(i);
+                myDelay(mapped_value);
+        if (mode != 0) return;
+            }
+
+            if(i == (j + 1))
+            {
+                break;
+            }
+        }
+    }
+
+    alloff();
+}
+
+/* Split Odd/Even Double-strobe Fill.
+ * Odd: 1,7,3,9,5; then clear all.
+ * Even: 6,2,8,4,10; then clear all.
+ * Two flashes per new LED; earlier LEDs remain ON. No reverse unfill.
+ */
+function mode_split_odd_even_double_strobe_fill()
+{
+    let group, step, position, flash;
+    alloff();
+    for (group = 0; group < 2; group++)
+    {
+        for (step = 0; step < channel/2; step++)
+        {
+            if (group == 0)
+                position = (step % 2 == 0) ? step : step + channel/2;
+            else
+                position = (step % 2 == 0) ? step + channel/2 : step;
+            for (flash = 0; flash < 2; flash++)
+            {
+                ledon(position);
+                myDelay(100);
+                if (mode != 0) return;
+                ledoff(position);
+                myDelay(mapped_value);
+                if (mode != 0) return;
+            }
+            ledon(position);
+            myDelay(mapped_value);
+            if (mode != 0) return;
+        }
+        alloff();
+        myDelay(mapped_value);
+        if (mode != 0) return;
+    }
+}
+
+/* Three fully ON LEDs form a moving tail; no PWM or dimming. */
+function mode_comet_ping_pong()
+{
+    let step, position, direction;
+    for (step = 0; step < 2*channel-2; step++) {
+        position = step < channel ? step : 2*channel-2-step;
+        direction = step < channel ? 1 : -1;
+        pattern_mask(led_bit(position) | led_bit(position-direction) |
+                     led_bit(position-2*direction));
+        myDelay(mapped_value);
+        if (mode != 0) return;
+    }
+    alloff();
+}
+
+function mode_twin_chase_cross_through()
+{
+    let position;
+    for (position = 0; position < channel; position++) {
+        pattern_mask(led_bit(position) | led_bit(channel-1-position));
+        myDelay(mapped_value);
+        if (mode != 0) return;
+    }
+    alloff();
+}
+
+function mode_center_out_strobe_fill()
+{
+    let position;
+    let mask, pair;
+    mask = 0;
+    for (position = channel/2-1; position >= 0; position--) {
+        pair = led_bit(position) | led_bit(channel-1-position);
+        pattern_mask(mask | pair);
+        myDelay(100);
+        if (mode != 0) return;
+        pattern_mask(mask);
+        myDelay(mapped_value);
+        if (mode != 0) return;
+        mask |= pair;
+        pattern_mask(mask);
+        myDelay(mapped_value);
+        if (mode != 0) return;
+    }
+    alloff();
+}
+
+function mode_dark_pair_mirror_chase()
+{
+    let step, position;
+    for (step = 0; step < channel-1; step++) {
+        position = step < channel/2 ? step : channel-2-step;
+        pattern_mask(((1 << channel)-1) ^ (led_bit(position) | led_bit(channel-1-position)));
+        myDelay(mapped_value);
+        if (mode != 0) return;
+    }
+    alloff();
+}
+
+function mode_two_ended_chase_and_stack()
+{
+    let depth, position;
+    let mask;
+    mask = 0;
+    for (depth = 0; depth < channel/2; depth++) {
+        for (position = 0; position <= channel/2-1-depth; position++) {
+            pattern_mask(mask | led_bit(position) | led_bit(channel-1-position));
+            myDelay(mapped_value);
+            if (mode != 0) return;
+        }
+        mask |= led_bit(channel/2-1-depth) | led_bit(channel/2+depth);
+        pattern_mask(mask);
+        myDelay(mapped_value);
+        if (mode != 0) return;
+    }
+    alloff();
+}
+
+function mode_expanding_contracting_band()
+{
+    let step, width, position;
+    let mask;
+    for (step = 0; step < channel; step++) {
+        width = step < channel/2 ? step+1 : channel-1-step;
+        mask = 0;
+        for (position = 0; position < width; position++)
+            mask |= led_bit(channel/2-1-position) | led_bit(channel/2+position);
+        pattern_mask(mask);
+        myDelay(mapped_value);
+        if (mode != 0) return;
+    }
+    alloff();
+}
+
+function mode_triple_strobe_burst_pause()
+{
+    let flash;
+    for (flash = 0; flash < 3; flash++) {
+        allon();
+        myDelay(40);
+        if (mode != 0) return;
+        alloff();
+        myDelay(flash == 2 ? mapped_value*3 : mapped_value);
+        if (mode != 0) return;
+    }
+}
+
+function mode_half_row_ten_strobe_alternate()
+{
+    let half, flash;
+    for (half = 0; half < 2; half++) {
+        for (flash = 0; flash < 10; flash++) {
+            pattern_mask(half == 0 ? ((1 << (channel/2))-1) : (((1 << (channel/2))-1) << (channel/2)));
+            myDelay(100);
+            if (mode != 0) return;
+            alloff();
+            myDelay(mapped_value);
+            if (mode != 0) return;
+        }
+    }
+}
+
+function mode_half_row_five_strobe_alternate()
+{
+    let half, flash;
+    for (half = 0; half < 2; half++) {
+        for (flash = 0; flash < 5; flash++) {
+            pattern_mask(half == 0 ? ((1 << (channel/2))-1) : (((1 << (channel/2))-1) << (channel/2)));
+            myDelay(100);
+            if (mode != 0) return;
+            alloff();
+            myDelay(mapped_value);
+            if (mode != 0) return;
+        }
+    }
+}
+
+function mode_bouncing_dark_window()
+{
+    let step, position;
+    for (step = 0; step < 2*channel-6; step++) {
+        position = step < channel-2 ? step : 2*channel-6-step;
+        pattern_mask(((1 << channel)-1) ^ (led_bit(position) |
+                     led_bit(position+1) | led_bit(position+2)));
+        myDelay(mapped_value);
+        if (mode != 0) return;
+    }
+    alloff();
+}
+
+function mode_forward_reverse_ripple_fill()
+{
+    let reverse, position;
+    let mask;
+    for (reverse = 0; reverse < 2; reverse++) {
+        mask = 0;
+        for (position = 0; position < channel; position++) {
+            mask |= led_bit(reverse ? channel-1-position : position);
+            pattern_mask(mask);
+            myDelay(mapped_value);
+            if (mode != 0) return;
+        }
+        for (position = 0; position < channel; position++) {
+            mask &= ~led_bit(reverse ? channel-1-position : position);
+            pattern_mask(mask);
+            myDelay(mapped_value);
+            if (mode != 0) return;
+        }
+    }
+    alloff();
+}
+
+/* Two adjacent LEDs on EACH side move inward, then outward.
+ * Four LEDs are ON per flash; mirrored blocks stop at the center.
+ */
+function mode_inward_outward_mirror_two_led_strobe_chase()
+{
+    let direction, step, position;
+    alloff();
+    for (direction = 0; direction < 2; direction++)
+    {
+        for (step = 0; step < channel/2 - 1; step++)
+        {
+            position = direction == 0 ? step : channel/2 - 2 - step;
+            ledon(position);
+            ledon(position+1);
+            ledon(channel-1-position);
+            ledon(channel-2-position);
+            myDelay(100);
+            if (mode != 0) return;
+            alloff();
+            myDelay(mapped_value);
+            if (mode != 0) return;
+        }
+    }
+}
+
+
+ const patterns={mode_forward_three_strobe_fill,mode_all_leds_strobe,mode_inward_mirror_strobe_chase,mode_inward_outward_mirror_strobe_chase,mode_bouncing_dark_window,mode_ping_pong_two_led_strobe_chase,mode_forward_single_led_chase,mode_outward_mirror_strobe_chase,mode_dark_pair_mirror_chase,mode_reverse_strobe_chain_fill,mode_triple_strobe_burst_pause,mode_ping_pong_triple_strobe_chase,mode_comet_ping_pong,mode_center_out_strobe_fill,mode_inward_outward_mirror_two_led_strobe_chase,mode_outward_mirror_fill_inward_empty,mode_inward_mirror_strobe_fill,mode_odd_eight_blinks_then_even_eight_blinks,mode_forward_strobe_chain_fill,mode_ping_pong_dark_chase,mode_reverse_single_led_chase,mode_forward_two_led_chase,mode_forward_fill_forward_empty,mode_two_ended_chase_and_stack,mode_ping_pong_three_led_strobe_chase,mode_forward_reverse_ripple_fill,mode_expanding_contracting_band,mode_forward_fill_reverse_empty,mode_twin_chase_cross_through,mode_half_row_ten_strobe_alternate,mode_half_row_five_strobe_alternate,mode_even_ten_blinks_then_odd_ten_blinks,mode_ping_pong_split_pair_strobe_chase,mode_ping_pong_double_strobe_chase,mode_split_odd_even_double_strobe_fill};
+ if(!patterns[id])throw Error('Unknown pattern'); patterns[id]();
+ return frames;
+}
+
+const PINS=['PC3','PC4','PC5','PC6','PC7','PA1','PA2','PA3','PD2','PD3'];
+
+const FULL=(1<<10)-1,$=id=>document.getElementById(id);let custom=[],selected=PRESETS[0].id,frames=[],frame=0,playing=false,timer=null,repeat=0,toastTimer;
+function validDesign(d){if(!d||typeof d.name!=='string'||!d.name.trim()||d.name.length>80||!Array.isArray(d.frames)||!d.frames.length||d.frames.length>10000)throw Error('Use a named animation with 1–10,000 frames.');return {id:'custom-'+Date.now()+'-'+Math.random().toString(36).slice(2,8),name:d.name,frames:d.frames.map(f=>{if(!Number.isInteger(f.mask)||f.mask<0||f.mask>FULL||!Number.isInteger(f.units)||f.units<1||f.units>60000)throw Error('Frames need a 10-bit LED mask and hold units from 1 to 60,000.');return {mask:f.mask,units:f.units};})};}
+try{const saved=JSON.parse(localStorage.getItem('led-studio-10')||'[]');if(Array.isArray(saved))custom=saved.map(validDesign);}catch(e){/* File storage can be unavailable; JSON export remains available. */}
+const isCustom=()=>selected.startsWith('custom-');const current=()=>[...PRESETS,...custom].find(p=>p.id===selected);
+function toast(msg){$('toast').textContent=msg;$('toast').style.display='block';clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').style.display='none',3500);}
+function persist(){try{localStorage.setItem('led-studio-10',JSON.stringify(custom));$('saved').textContent='Saved in this browser';}catch(e){$('saved').textContent='Export JSON to keep your design';}}
+function library(){const q=$('search').value.toLowerCase();$('library').replaceChildren();[...PRESETS,...custom].forEach((p,i)=>{if(!p.name.toLowerCase().includes(q))return;const b=document.createElement('button');b.className='preset'+(selected===p.id?' active':'');const n=document.createElement('span');n.className='idx';n.textContent=i<PRESETS.length?String(i+1).padStart(2,'0'):'◇';const label=document.createElement('span');label.className='label';label.textContent=p.name;b.append(n,label);if(p.studio){const tag=document.createElement('span');tag.className='badge';tag.textContent='IDEA';b.append(tag);}b.onclick=()=>select(p.id);$('library').append(b);});}
+function stop(){playing=false;clearTimeout(timer);timer=null;$('play').textContent='▶ Play';$('state').textContent='● PAUSED';}
+function select(id,autoplay=false){stop();selected=id;frame=0;repeat=0;frames=isCustom()?current().frames:capturePattern(id,+$('speed').value);$('title').textContent=current().name;$('kind').textContent=isCustom()?'Your collection / Custom animation':(current().studio?'Studio only / Suggested pattern ':'Firmware collection / ')+String(PRESETS.findIndex(p=>p.id===id)+1).padStart(2,'0');$('subtitle').textContent=isCustom()?'Editable animation · click LEDs to paint each frame':(current().studio?'ON/OFF preview · not added to firmware':'Original sequence · '+current().repeats+' repeats in firmware playlist');$('rename').value=current().name;['rename','hold','add','duplicate','delete','all','none','invert','shift'].forEach(k=>$(k).disabled=!isCustom());$('copy').textContent=isCustom()?'Make a copy':'Copy to edit';$('playlist').disabled=isCustom();if(isCustom())$('playlist').checked=false;$('speed').disabled=isCustom();$('editHint').textContent=isCustom()?'Click LEDs to toggle them. Select a frame, set its hold time, then add the next step.':'Copy this firmware pattern to edit frames. Click any frame to inspect it.';library();timeline();render();if(autoplay)play();}
+function timeline(){$('timeline').replaceChildren();frames.forEach((f,i)=>{const b=document.createElement('button');b.className='frame';b.setAttribute('aria-label','Frame '+(i+1));const dots=document.createElement('i');dots.textContent=Array.from({length:10},(_,n)=>f.mask&(1<<n)?'●':'·').join('');const label=document.createElement('span');label.textContent=String(i+1).padStart(2,'0');b.append(dots,label);b.onclick=()=>{stop();frame=i;render();};$('timeline').append(b);});$('frameTotal').textContent=' / '+frames.length;}
+function render(){const f=frames[frame];[...$('board').children].forEach((b,i)=>{const on=!!(f.mask&(1<<i));b.classList.toggle('on',on);b.setAttribute('aria-pressed',String(on));});$('counter').textContent='Frame '+(frame+1)+' / '+frames.length;$('lit').textContent=f.mask.toString(2).replace(/0/g,'').length+' / 10 illuminated';$('duration').textContent=(frames.reduce((n,f)=>n+f.units,0)/1000).toFixed(2)+' s / cycle';$('hold').value=f.units;[...$('timeline').children].forEach((b,i)=>b.classList.toggle('selected',i===frame));$('delete').disabled=!isCustom()||frames.length===1;}
+function play(){if(playing)return;playing=true;$('play').textContent='Ⅱ Pause';$('state').textContent='● PLAYING';schedule();}
+function schedule(){timer=setTimeout(()=>{if(!playing)return;frame++;if(frame===frames.length){frame=0;if($('playlist').checked&&!isCustom()){repeat++;if(repeat>=current().repeats){const i=PRESETS.findIndex(p=>p.id===selected);if(i===PRESETS.length-1&&!$('loop').checked){frame=frames.length-1;stop();render();return;}select(PRESETS[(i+1)%PRESETS.length].id,true);return;}}else if(!$('loop').checked){frame=frames.length-1;stop();render();return;}}render();schedule();},Math.max(10,frames[frame].units));}
+function edit(fn){if(!isCustom())return;stop();fn();persist();timeline();render();}
+function download(name,text,type){const url=URL.createObjectURL(new Blob([text],{type}));const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
+for(let i=0;i<10;i++){const b=document.createElement('button');b.className='led';b.setAttribute('aria-label','LED '+(i+1)+' / '+PINS[i]);b.innerHTML='<span class="bulb"></span><span class="num">'+String(i+1).padStart(2,'0')+'</span><small>'+PINS[i]+'</small>';b.onclick=()=>{if(!isCustom()){toast('Choose “Copy to edit” to change this pattern.');return;}edit(()=>frames[frame].mask^=1<<i);};$('board').append(b);}
+$('play').onclick=()=>playing?stop():play();$('prev').onclick=()=>{stop();frame=(frame+frames.length-1)%frames.length;render();};$('next').onclick=()=>{stop();frame=(frame+1)%frames.length;render();};$('restart').onclick=()=>{const resume=playing;stop();frame=0;repeat=0;render();if(resume)play();};
+$('search').oninput=library;$('speed').oninput=()=>{const resume=playing;$('speedVal').textContent=$('speed').value;if(!isCustom())select(selected,resume);};$('color').oninput=()=>document.documentElement.style.setProperty('--led-color',$('color').value);
+$('layout').onchange=()=>{const ring=$('layout').value==='ring';$('board').classList.toggle('ring',ring);$('board').classList.toggle('single',$('layout').value==='single');[...$('board').children].forEach((b,i)=>{b.style.left=ring?50+42*Math.sin(i*2*Math.PI/10)+'%':'';b.style.top=ring?50-40*Math.cos(i*2*Math.PI/10)+'%':'';});};
+$('copy').onclick=()=>{const d=validDesign({name:(current().name.slice(0,70)+' copy'),frames:frames.map(f=>({...f}))});custom.push(d);persist();select(d.id);};$('new').onclick=()=>{const d=validDesign({name:'Untitled animation',frames:[{mask:0,units:180}]});custom.push(d);persist();select(d.id);};
+$('rename').onchange=()=>{const n=$('rename').value.trim();if(!n){$('rename').value=current().name;return;}current().name=n;$('title').textContent=n;persist();library();};$('hold').onchange=()=>{const n=+$('hold').value;if(!Number.isInteger(n)||n<1||n>60000){toast('Hold must be 1–60,000 units.');render();return;}edit(()=>frames[frame].units=n);};
+$('add').onclick=()=>{if(frames.length>=10000){toast('Maximum 10,000 frames.');return;}edit(()=>{frames.splice(frame+1,0,{mask:0,units:frames[frame].units});frame++;});};$('duplicate').onclick=()=>{if(frames.length>=10000){toast('Maximum 10,000 frames.');return;}edit(()=>{frames.splice(frame+1,0,{...frames[frame]});frame++;});};$('delete').onclick=()=>edit(()=>{if(frames.length>1){frames.splice(frame,1);frame=Math.min(frame,frames.length-1);}});$('all').onclick=()=>edit(()=>frames[frame].mask=FULL);$('none').onclick=()=>edit(()=>frames[frame].mask=0);$('invert').onclick=()=>edit(()=>frames[frame].mask^=FULL);$('shift').onclick=()=>edit(()=>frames[frame].mask=((frames[frame].mask<<1)|(frames[frame].mask>>>9))&FULL);
+$('save').onclick=()=>download('led-animation.json',JSON.stringify({version:1,channels:10,name:current().name,frames},null,2),'application/json');$('load').onclick=()=>$('file').click();$('file').onchange=async()=>{const file=$('file').files[0];if(!file)return;try{if(file.size>3000000)throw Error('Please use a JSON file under 3 MB.');const data=JSON.parse(await file.text());if(data.version!==1||data.channels!==10)throw Error('Use a version 1, 10-channel studio JSON file.');const d=validDesign(data);custom.push(d);persist();select(d.id);toast('Animation imported.');}catch(e){toast(e.message);}$('file').value='';};
+$('exportC').onclick=()=>{const code='/* LED Studio: '+current().name.replace(/[^a-zA-Z0-9 _-]/g,'')+'\n * Add to main.c and call mode_custom_animation() in the mode-0 playlist.\n * Holds use existing myDelay units, not calibrated milliseconds.\n * Check Flash capacity after compilation. */\nvoid mode_custom_animation(void)\n{\n    static const unsigned long masks['+frames.length+'] = {\n        '+frames.map(f=>'0x'+f.mask.toString(16).toUpperCase()+'UL').join(', ')+ '\n    };\n    static const unsigned int holds['+frames.length+'] = {\n        '+frames.map(f=>f.units+'U').join(', ')+'\n    };\n    unsigned int f;\n    unsigned int remaining;\n    unsigned char led;\n    for (f = 0; f < '+frames.length+'U; f++) {\n        alloff();\n        for (led = 0; led < channel; led++)\n            if (masks[f] & (1UL << led)) ledon(led);\n        remaining = holds[f];\n        while (remaining > 30000U) {\n            myDelay(30000);\n            if (mode != 0) return;\n            remaining -= 30000U;\n        }\n        myDelay((int)remaining);\n        if (mode != 0) return;\n    }\n    alloff();\n}\n';download('custom_animation.c',code,'text/plain');toast('C exported. Add its function to the firmware playlist.');};
+select(selected);
+</script></body></html>
